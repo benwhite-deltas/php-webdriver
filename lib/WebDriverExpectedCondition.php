@@ -148,12 +148,11 @@ class WebDriverExpectedCondition
     {
         return new static(
             function (WebDriver $driver) use ($by) {
-            	try {
-		            return $driver->findElement($by);
-	            }
-	            catch (\Facebook\WebDriver\Exception\NoSuchElementException $e) {
-            		return false;
-	            }
+                try {
+                    return $driver->findElement($by);
+                } catch (\Facebook\WebDriver\Exception\NoSuchElementException $e) {
+                    return false;
+                }
             }
         );
     }

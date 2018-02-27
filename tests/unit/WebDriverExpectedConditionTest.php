@@ -135,25 +135,25 @@ class WebDriverExpectedConditionTest extends TestCase
         $this->assertSame($element, $this->wait->until($condition));
     }
 
-	public function testShouldDetectAbsenceOfElementLocatedCondition()
-	{
-		$element = new RemoteWebElement(new RemoteExecuteMethod($this->driverMock), 'id');
+    public function testShouldDetectAbsenceOfElementLocatedCondition()
+    {
+        $element = new RemoteWebElement(new RemoteExecuteMethod($this->driverMock), 'id');
 
-		$this->driverMock->expects($this->at(0))
-			->method('findElement')
-			->with($this->isInstanceOf(WebDriverBy::class))
-			->willReturn($element);
+        $this->driverMock->expects($this->at(0))
+            ->method('findElement')
+            ->with($this->isInstanceOf(WebDriverBy::class))
+            ->willReturn($element);
 
-		$this->driverMock->expects($this->at(1))
-			->method('findElement')
-			->with($this->isInstanceOf(WebDriverBy::class))
-			->willThrowException(new NoSuchElementException(''));
+        $this->driverMock->expects($this->at(1))
+            ->method('findElement')
+            ->with($this->isInstanceOf(WebDriverBy::class))
+            ->willThrowException(new NoSuchElementException(''));
 
-		$condition = WebDriverExpectedCondition::not(WebDriverExpectedCondition::presenceOfElementLocated(WebDriverBy::cssSelector('.foo')));
+        $condition = WebDriverExpectedCondition::not(WebDriverExpectedCondition::presenceOfElementLocated(WebDriverBy::cssSelector('.foo')));
 
-		$this->assertSame(false, $condition->getApply()($this->driverMock));
-		$this->assertSame(true, $condition->getApply()($this->driverMock));
-	}
+        $this->assertFalse($condition->getApply()($this->driverMock));
+        $this->assertTrue($condition->getApply()($this->driverMock));
+    }
 
     public function testShouldDetectPresenceOfAllElementsLocatedByCondition()
     {
