@@ -150,7 +150,7 @@ class WebDriverExpectedCondition
             function (WebDriver $driver) use ($by) {
                 try {
                     return $driver->findElement($by);
-                } catch (\Facebook\WebDriver\Exception\NoSuchElementException $e) {
+                } catch (NoSuchElementException $e) {
                     return false;
                 }
             }
